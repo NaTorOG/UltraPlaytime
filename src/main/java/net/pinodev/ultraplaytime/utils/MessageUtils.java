@@ -1,7 +1,6 @@
 package net.pinodev.ultraplaytime.utils;
 
 import net.md_5.bungee.api.ChatColor;
-import net.pinodev.ultraplaytime.configs.files.Rewards;
 import net.pinodev.ultraplaytime.placeholder.Placeholders;
 import net.pinodev.ultraplaytime.configs.files.Locale;
 import org.bukkit.command.CommandSender;

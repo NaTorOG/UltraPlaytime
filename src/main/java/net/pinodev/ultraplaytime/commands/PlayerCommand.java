@@ -48,6 +48,8 @@ public class PlayerCommand implements CommandExecutor, TabExecutor {
                     utilsManager.message.send(Locale.PLAYER_PLAYTIME, commandSender, placeholders);
                 }
                 break;
+            default:
+                break;
         }
         return true;
     }

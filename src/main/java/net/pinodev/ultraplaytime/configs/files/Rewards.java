@@ -1,6 +1,5 @@
 package net.pinodev.ultraplaytime.configs.files;
 
-import net.md_5.bungee.api.ChatColor;
 
 import java.util.List;
 import java.util.function.Function;

@@ -27,11 +27,9 @@ public class TaskAfk {
                     final User user = userManager.getCachedUsers().get(uuid);
                     if(location.equals(lastLocation)){
                         afkUser.setSeconds(afkForSeconds+2);
-                        if(afkForSeconds >= Settings.AFK_AFTER.getInt()){
+                        if(afkForSeconds >= Settings.AFK_AFTER.getInt() && user != null){
                             // Player is now considered AFK
-                            if(user != null){
                                 user.setAfk(true);
-                            }
                         }
                     }else{
                         if (user != null) {

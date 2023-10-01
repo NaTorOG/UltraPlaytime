@@ -35,6 +35,7 @@ public enum Statements {
     Statements(String statement){
         this.statement = statement;
     }
+
     public String getStatement() {
         return statement;
     }

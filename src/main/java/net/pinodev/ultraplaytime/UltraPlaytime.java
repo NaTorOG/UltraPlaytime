@@ -110,10 +110,10 @@ public final class UltraPlaytime extends JavaPlugin {
     }
 
     private void setListeners(){
-        PlayerJoin playerJoin;
-        pluginManager.registerEvents(playerJoin = new PlayerJoin(),this);
-        PlayerQuit playerQuit;
-        pluginManager.registerEvents(playerQuit = new PlayerQuit(),this);
+        PlayerJoin playerJoin = new PlayerJoin();
+        pluginManager.registerEvents(playerJoin,this);
+        PlayerQuit playerQuit = new PlayerQuit();
+        pluginManager.registerEvents(playerQuit,this);
     }
 
     private void setCommands(){

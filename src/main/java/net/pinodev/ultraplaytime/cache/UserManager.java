@@ -12,6 +12,7 @@ public class UserManager {
 
     @Getter
     private final ConcurrentHashMap<UUID, User> cachedUsers;
+    
     @Getter
     private final CopyOnWriteArrayList<TopUser> topUsers;
 
