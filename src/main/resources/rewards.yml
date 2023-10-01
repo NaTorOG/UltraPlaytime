@@ -1,0 +1,11 @@
+Rewards:
+    1:
+      requirement: 100
+      messages:
+          - ""
+      sound: ""
+      title:
+          upperTitle: ""
+          subTitle: ""
+      commands:
+          - "give {player} diamond 1"

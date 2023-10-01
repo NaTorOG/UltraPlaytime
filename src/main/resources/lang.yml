@@ -1,0 +1,16 @@
+prefix: "&7[&eUltraPlaytime&7] &8»"
+TimeFormat:
+  years: years
+  year: year
+  months: months
+  month: month
+  days: days
+  day: day
+  hours: hours
+  hour: hour
+  minutes: minutes
+  minute: minute
+  seconds: seconds
+  second: second
+playerPlaytime:
+  - "{prefix} &fYour playtime is: &e{playtime}"

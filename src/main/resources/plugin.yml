@@ -1,0 +1,11 @@
+name: UltraPlaytime
+version: '${project.version}'
+main: net.pinodev.ultraplaytime.UltraPlaytime
+api-version: '1.16'
+commands:
+  playtime:
+    description: "Check your playtime"
+    permission: "ultraplaytime.playtime"
+    aliases:
+      - ptime
+      - ultraplaytime
