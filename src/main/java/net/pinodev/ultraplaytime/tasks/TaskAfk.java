@@ -34,7 +34,10 @@ public class TaskAfk {
                             }
                         }
                     }else{
-                        if (user != null) { user.setAfk(false); afkUser.setSeconds(0); }
+                        if (user != null) {
+                            user.setAfk(false);
+                            afkUser.setSeconds(0);
+                        }
                     }
                     afkUser.setLocation(location);
                 }

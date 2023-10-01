@@ -63,7 +63,7 @@ public class TaskRewards {
             final Sound rewardSound = Sound.valueOf(reward.getSound());
             final List<String> commands = reward.getCommands().stream().map(string -> string.replace("{player}", player.getName()))
                     .filter(string -> string.contains(player.getName()))
-                    .collect(Collectors.toList());;
+                    .collect(Collectors.toList());
             final List<String> messages = reward.getMessages().stream().map(string -> string.replace("{player}", player.getName()))
                     .filter(string -> string.contains(player.getName()))
                     .collect(Collectors.toList());
