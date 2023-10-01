@@ -1,7 +1,6 @@
 package net.pinodev.ultraplaytime;
 
-import net.pinodev.ultraplaytime.Tasks.TaskRewards;
-import net.pinodev.ultraplaytime.Tasks.TasksManager;
+import net.pinodev.ultraplaytime.tasks.TasksManager;
 import net.pinodev.ultraplaytime.cache.UserManager;
 import net.pinodev.ultraplaytime.commands.PlayerCommand;
 import net.pinodev.ultraplaytime.configs.ConfigFiles;

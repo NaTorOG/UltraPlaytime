@@ -1,4 +1,4 @@
-package net.pinodev.ultraplaytime.Tasks;
+package net.pinodev.ultraplaytime.tasks;
 
 import net.pinodev.ultraplaytime.cache.AfkUser;
 import net.pinodev.ultraplaytime.cache.User;

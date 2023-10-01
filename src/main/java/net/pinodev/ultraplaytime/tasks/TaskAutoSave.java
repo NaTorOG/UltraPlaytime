@@ -1,15 +1,11 @@
-package net.pinodev.ultraplaytime.Tasks;
+package net.pinodev.ultraplaytime.tasks;
 
 import net.pinodev.ultraplaytime.cache.User;
-import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static net.pinodev.ultraplaytime.UltraPlaytime.*;
 import static net.pinodev.ultraplaytime.database.queries.Statements.SAVE_USER_DATA;

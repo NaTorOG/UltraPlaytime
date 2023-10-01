@@ -1,19 +1,15 @@
-package net.pinodev.ultraplaytime.Tasks;
+package net.pinodev.ultraplaytime.tasks;
 
 import net.pinodev.ultraplaytime.cache.User;
 import net.pinodev.ultraplaytime.configs.files.Rewards;
-import net.pinodev.ultraplaytime.placeholder.Placeholders;
 import net.pinodev.ultraplaytime.rewards.Reward;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
