@@ -2,6 +2,8 @@ name: UltraPlaytime
 version: '${project.version}'
 main: net.pinodev.ultraplaytime.UltraPlaytime
 api-version: '1.16'
+softdepend:
+  - PlaceholderAPI
 commands:
   playtime:
     description: "Check your playtime"
@@ -9,3 +11,9 @@ commands:
     aliases:
       - ptime
       - ultraplaytime
+  playtimeadmin:
+    description: "Administrator commands"
+    permission: "ultraplaytime.admin"
+    aliases:
+      - ptimeadmin
+      - uptimeadmin

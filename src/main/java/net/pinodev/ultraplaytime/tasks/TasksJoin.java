@@ -23,11 +23,11 @@ public class TasksJoin {
             if(MULTI_SERVER.getBoolean()){
                 waitForLatency()
                         .thenCompose(getData -> getUserData(uuid))
-                        .thenRun(()-> logger.info("Took JOIN " + (System.currentTimeMillis() - time) + "ms"))
+                        .thenRun(()-> logger.info("Took JOIN-A " + (System.currentTimeMillis() - time) + "ms"))
                         .join();
             }else{
                 getUserData(uuid)
-                        .thenRun(()-> logger.info("Took JOIN " + (System.currentTimeMillis() - time) + "ms"))
+                        .thenRun(()-> logger.info("Took JOIN-B " + (System.currentTimeMillis() - time) + "ms"))
                         .join();
             }
         });

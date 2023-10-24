@@ -1,12 +1,12 @@
 package net.pinodev.ultraplaytime.configs;
 
+import net.pinodev.ultraplaytime.configs.files.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.logger;
-import static net.pinodev.ultraplaytime.UltraPlaytime.mainInstance;
+import static net.pinodev.ultraplaytime.UltraPlaytime.*;
 import static org.bukkit.configuration.file.YamlConfiguration.loadConfiguration;
 
 public class ConfigFiles implements ManagerFiles {
@@ -46,11 +46,6 @@ public class ConfigFiles implements ManagerFiles {
     @Override
     public void reload(CommandSender sender) {
         fileConfiguration = loadConfiguration(configFile);
-        String infoLog = ("Correctly reloaded " + configFile.getName());
-        if ((sender != null)) {
-            sender.sendMessage(infoLog);
-        } else {
-            logger.info(infoLog);
-        }
+        utilsManager.message.send(Locale.RELOADED_FILE.getString().replace("{file}", configFile.getName()) , sender);
     }
 }

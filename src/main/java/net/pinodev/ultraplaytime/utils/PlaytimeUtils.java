@@ -42,5 +42,15 @@ public class PlaytimeUtils {
         }
     }
 
+    public boolean isInteger(String toParse){
+        int number;
+        try{
+            number = Integer.parseInt(toParse);
+            return true;
+        }catch (NumberFormatException exception){
+            return false;
+        }
+    }
+
 
 }

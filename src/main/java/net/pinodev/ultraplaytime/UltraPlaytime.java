@@ -1,8 +1,10 @@
 package net.pinodev.ultraplaytime;
 
+import net.pinodev.ultraplaytime.commands.admin.AdminCommand;
+import net.pinodev.ultraplaytime.placeholder.PapiHook;
 import net.pinodev.ultraplaytime.tasks.TasksManager;
 import net.pinodev.ultraplaytime.cache.UserManager;
-import net.pinodev.ultraplaytime.commands.PlayerCommand;
+import net.pinodev.ultraplaytime.commands.player.PlayerCommand;
 import net.pinodev.ultraplaytime.configs.ConfigFiles;
 import net.pinodev.ultraplaytime.configs.files.Settings;
 import net.pinodev.ultraplaytime.database.DatabaseManager;
@@ -14,6 +16,7 @@ import net.pinodev.ultraplaytime.listeners.PlayerJoin;
 import net.pinodev.ultraplaytime.listeners.PlayerQuit;
 import net.pinodev.ultraplaytime.rewards.RewardManager;
 import net.pinodev.ultraplaytime.utils.UtilsManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
@@ -25,7 +28,7 @@ import java.util.logging.Logger;
 import static net.pinodev.ultraplaytime.configs.files.Settings.DB_TYPE;
 import static net.pinodev.ultraplaytime.utils.LogUtils.*;
 
-public final class UltraPlaytime extends JavaPlugin {
+public final class UltraPlaytime extends JavaPlugin{
 
     public static UltraPlaytime mainInstance;
 
@@ -79,6 +82,7 @@ public final class UltraPlaytime extends JavaPlugin {
         setInstances();
         setListeners();
         setCommands();
+        registerSoftDependencies();
         logger.info("Took " + (System.currentTimeMillis() - startTime) +" ms");
 
     }
@@ -116,9 +120,22 @@ public final class UltraPlaytime extends JavaPlugin {
         pluginManager.registerEvents(playerQuit,this);
     }
 
+    private void registerSoftDependencies(){
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PapiHook().register();
+            logger.info("[!] " + "Founded PlaceholdersAPI plugin");
+            logger.info("[!] " + "all the related futures are activated");
+        }else {
+            logger.info("[!] " + "Impossible to found PlaceholdersAPI plugin");
+            logger.info("[!] " + "all the related futures are disabled");
+        }
+    }
+
     private void setCommands(){
-        PlayerCommand playerCommand = new PlayerCommand();
-        loadCommand("playtime", playerCommand, playerCommand);
+        PlayerCommand playtimeCommand = new PlayerCommand();
+        loadCommand("playtime", playtimeCommand, playtimeCommand);
+        AdminCommand adminCommand = new AdminCommand();
+        loadCommand("playtimeadmin", adminCommand, adminCommand);
     }
 
 

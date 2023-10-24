@@ -12,7 +12,7 @@ import static net.pinodev.ultraplaytime.configs.files.Settings.LEADERBOARD_REFRE
 public class TasksManager {
 
     private final ScheduledExecutorService scheduler;
-    private final TaskLeaderboard leaderboard;
+    public final TasksLeaderboard leaderboard;
 
     private final TaskPlaytime playtimeUpdater;
 
@@ -28,7 +28,7 @@ public class TasksManager {
 
     public TasksManager(){
         scheduler = Executors.newScheduledThreadPool(2);
-        this.leaderboard = new TaskLeaderboard();
+        this.leaderboard = new TasksLeaderboard();
         this.playtimeUpdater = new TaskPlaytime();
         if(!Settings.MULTI_SERVER_REWARDS.getBoolean()){
             this.rewards = new TaskRewards();
@@ -48,7 +48,7 @@ public class TasksManager {
             scheduler.scheduleAtFixedRate(this.rewards::check, 0, 2, TimeUnit.SECONDS);
         }
         if(!Settings.MULTI_SERVER.getBoolean()){
-            scheduler.scheduleAtFixedRate(this.autoSave::autoSaveData, AUTO_SAVE.getInt() ,AUTO_SAVE.getInt(), TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(this.autoSave::autoSaveData, AUTO_SAVE.getInt() ,AUTO_SAVE.getInt(), TimeUnit.MINUTES);
         }
     }
 

@@ -22,6 +22,10 @@ public class UserManager {
         topUsers = new CopyOnWriteArrayList<>();
     }
 
+    public User getUser(UUID uuid){
+        return cachedUsers.get(uuid);
+    }
+
     public void addUser(UUID uuid, User user){
         cachedUsers.remove(uuid);
         cachedUsers.put(uuid, user);
@@ -37,8 +41,10 @@ public class UserManager {
     }
 
     public TopUser getTopUserAt(int topPosition){
-
-        return topUsers.get(topPosition);
+        if(topUsers.size() > topPosition){
+            return topUsers.get(topPosition);
+        }
+        return null;
     }
 
 }

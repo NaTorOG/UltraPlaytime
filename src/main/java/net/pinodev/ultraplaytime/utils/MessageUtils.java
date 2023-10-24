@@ -1,14 +1,22 @@
 package net.pinodev.ultraplaytime.utils;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
-import net.pinodev.ultraplaytime.placeholder.Placeholders;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.pinodev.ultraplaytime.cache.User;
+import net.pinodev.ultraplaytime.placeholder.Placeholder;
 import net.pinodev.ultraplaytime.configs.files.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static net.pinodev.ultraplaytime.UltraPlaytime.userManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
 
 public class MessageUtils {
     public String colorized(String message) {
@@ -27,77 +35,92 @@ public class MessageUtils {
             message = message.replace(hexCode, builder.toString());
             matcher = pattern.matcher(message);
         }
-
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public  void send(Locale message, CommandSender target, List<Placeholders> placeholders){
-        final Object messageType = message.value.apply(message.key);
-        if(messageType instanceof String){
-            String text = (String) messageType;
-            text = colorized(text);
-            target.sendMessage(replacePlaceholders(text, placeholders));
-        }else if(messageType instanceof List<?>){
-            final List<?> messages = (List<?>) messageType;
-             for(Object value : messages){
-                 if(value instanceof String){
-                     String text = (String) value;
-                     text = colorized(text);
-                     target.sendMessage(replacePlaceholders(text, placeholders));
-                 }
-             }
 
+    public void sendPlaytime(Locale locale, Player target, CommandSender sender){
+        final User user = userManager.getCachedUsers().get(target.getUniqueId());
+        final Long playtime = user.getPlaytime();
+        List<Placeholder> placeholders = new ArrayList<>();
+        placeholders.add(new Placeholder("{playtime}", utilsManager.playtime.formatted(playtime)));
+        placeholders.add(new Placeholder("{rewards}", utilsManager.rewards.getCurrentReward(target)));
+        if(locale == Locale.TARGET_PLAYTIME){
+            placeholders.add(new Placeholder("{player}", target.getName()));
+        }
+        send(locale, sender, placeholders);
+    }
+
+    public void send(Locale locale, CommandSender target, List<Placeholder> placeholders){
+        if(locale.type == String.class){
+            if (placeholders == null) {
+                send(locale.getString(), target);
+            } else {
+                send(locale.getString(), target, placeholders);
+            }
+        } else if (locale.type == List.class) {
+            if (placeholders == null) {
+                send(locale.getStringList(), target);
+            } else {
+                send(locale.getStringList(), target, placeholders);
+            }
         }
     }
 
-    public void send(String message, CommandSender target, List<Placeholders> placeholders){
-        message = colorized(message);
+
+    public void send(String message, CommandSender target, List<Placeholder> placeholders){
+        message = colorized(message.replace("{prefix}", Locale.PREFIX.getString()));
         target.sendMessage(replacePlaceholders(message, placeholders));
     }
-    public void send(List<String> messages, CommandSender target, List<Placeholders> placeholders){
+
+    public void send(String message, CommandSender target){
+        message = colorized(message.replace("{prefix}", Locale.PREFIX.getString()));
+        target.sendMessage(message);
+    }
+
+    public void send(List<String> messages, CommandSender target, List<Placeholder> placeholders){
         for(String message : messages){
-            message = colorized(message);
+            message = colorized(message.replace("{prefix}", Locale.PREFIX.getString()));
             target.sendMessage(replacePlaceholders(message, placeholders));
         }
     }
 
-    public void sendTitle(String upperTitle, String subTitle, final Player target, List<Placeholders> placeholders){
-        upperTitle = colorized(upperTitle);
-        subTitle = colorized(subTitle);
-        target.sendTitle(
-                replacePlaceholders(upperTitle, placeholders),
-                replacePlaceholders(subTitle, placeholders),
-                20,
-                100,
-                100
-        );
-    }
-
-    public void send(String message, CommandSender target){
-        message = colorized(message);
-        target.sendMessage(message);
-    }
     public void send(List<String> messages, CommandSender target){
         for(String message : messages){
-            message = colorized(message);
+            message = colorized(message.replace("{prefix}", Locale.PREFIX.getString()));
             target.sendMessage(message);
         }
     }
+
+    public void sendTopPlayers(List<String> messages, Player player, BaseComponent nextPage, BaseComponent previousPage){
+        for(String message : messages){
+            message = colorized(message);
+            if(message.contains("{next-page}") && message.contains("{prev-page}")){
+                previousPage.addExtra(nextPage);
+                player.spigot().sendMessage(previousPage);
+            }else if (message.contains("{prev-page}")) {
+                player.spigot().sendMessage(previousPage);
+            } else if (message.contains("{next-page}")) {
+                player.spigot().sendMessage(nextPage);
+            }else{
+                message = PlaceholderAPI.setPlaceholders(player, message);
+                player.sendMessage(message);
+            }
+        }
+    }
+
 
     public void sendTitle(String upperTitle, String subTitle, final Player target){
         upperTitle = colorized(upperTitle);
         subTitle = colorized(subTitle);
         target.sendTitle(
                 upperTitle,
-                subTitle,
-                20,
-                100,
-                100
+                subTitle
         );
     }
 
-    public String replacePlaceholders(String text, List<Placeholders> placeholders){
-        for(Placeholders placeholder : placeholders){
+    public String replacePlaceholders(String text, List<Placeholder> placeholders){
+        for(Placeholder placeholder : placeholders){
             text = text.replace(placeholder.getToSubstitute(), placeholder.getSubstitutor());
         }
         return text;

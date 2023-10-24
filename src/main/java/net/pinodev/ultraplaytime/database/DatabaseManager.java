@@ -11,6 +11,7 @@ import java.util.logging.Level;
 
 import static net.pinodev.ultraplaytime.UltraPlaytime.logger;
 import static net.pinodev.ultraplaytime.UltraPlaytime.settingsYML;
+import static net.pinodev.ultraplaytime.database.queries.Statements.CREATE_TABLE_NO_LEADERBOARD;
 import static net.pinodev.ultraplaytime.database.queries.Statements.CREATE_TABLE_USERS;
 
 
@@ -61,8 +62,10 @@ public interface DatabaseManager {
     */
     default void databaseInit(){
         try(Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TABLE_USERS.getStatement())){
-            preparedStatement.executeUpdate();
+            PreparedStatement tableUsers = connection.prepareStatement(CREATE_TABLE_USERS.getStatement());
+            PreparedStatement tableNoLeaderboard = connection.prepareStatement(CREATE_TABLE_NO_LEADERBOARD.getStatement())){
+            tableUsers.executeUpdate();
+            tableNoLeaderboard.executeUpdate();
         }catch (SQLException exception){
             exception.printStackTrace();
         }

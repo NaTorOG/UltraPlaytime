@@ -1,6 +1,9 @@
 package net.pinodev.ultraplaytime.configs.files;
 
 
+import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
+
 import java.util.List;
 import java.util.function.Function;
 
@@ -8,38 +11,28 @@ import static net.pinodev.ultraplaytime.UltraPlaytime.*;
 
 public enum Rewards {
 
-    REWARD_REQUIREMENT(Integer.class, "Rewards.X.requirement", rewardsYML.getFileConfiguration()::getInt),
-    REWARD_MESSAGES(List.class, "Rewards.X.messages", rewardsYML.getFileConfiguration()::getStringList),
-    REWARD_UPPER_TITLE(String.class, "Rewards.X.title.upperTitle", rewardsYML.getFileConfiguration()::getString),
-    REWARD_SUB_TITLE(String.class, "Rewards.X.title.subTitle", rewardsYML.getFileConfiguration()::getString),
-    REWARD_SOUND(Integer.class, "Rewards.X.sound", rewardsYML.getFileConfiguration()::getString),
-    REWARD_COMMANDS(List.class, "Rewards.X.commands", rewardsYML.getFileConfiguration()::getStringList);
+    REWARD_REQUIREMENT("Rewards.X.requirement"),
+    REWARD_MESSAGES("Rewards.X.messages"),
+    REWARD_UPPER_TITLE("Rewards.X.title.upperTitle"),
+    REWARD_SUB_TITLE("Rewards.X.title.subTitle"),
+    REWARD_SOUND("Rewards.X.sound"),
+    REWARD_COMMANDS("Rewards.X.commands");
 
+    private final String key;
 
-    public final String key;
-    public final Function<String, ?> value;
-
-    Rewards(Class<?> type, String key, Function<String, ?> value) {
+    Rewards(String key) {
         this.key = key;
-        this.value = value;
     }
 
     public String getString(int rewardID) {
-        return (String) value.apply(key.replace("X", String.valueOf(rewardID)));
+        return rewardsYML.getFileConfiguration().getString(key.replace("X", String.valueOf(rewardID)));
     }
 
     public Integer getInt(int rewardID){
-        return (Integer) value.apply(key.replace("X", String.valueOf(rewardID)));
+        return rewardsYML.getFileConfiguration().getInt(key.replace("X", String.valueOf(rewardID)));
     }
 
     public List<String> getStringList(int rewardID){
-        return castToList(value.apply(key.replace("X", String.valueOf(rewardID))));
+        return rewardsYML.getFileConfiguration().getStringList(key.replace("X", String.valueOf(rewardID)));
     }
-
-    @SuppressWarnings("unchecked")
-    private <T> List<T> castToList(Object obj) {
-        return (List<T>) obj;
-    }
-
-
 }

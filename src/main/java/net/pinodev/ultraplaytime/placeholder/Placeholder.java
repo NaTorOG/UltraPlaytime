@@ -3,7 +3,7 @@ package net.pinodev.ultraplaytime.placeholder;
 
 import lombok.Getter;
 
-public class Placeholders {
+public class Placeholder {
 
     @Getter
     private final String toSubstitute;
@@ -11,7 +11,7 @@ public class Placeholders {
     @Getter
     private final String substitutor;
 
-    public Placeholders(String toSubstitute, String substitutor) {
+    public Placeholder(String toSubstitute, String substitutor) {
         this.toSubstitute = toSubstitute;
         this.substitutor = substitutor;
     }

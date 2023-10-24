@@ -14,6 +14,7 @@ Database:
   type: H2
   name: ultra_playtime
   table_userdata: user_data
+  table_no_leaderboard: users_not_leaderboard
   host: "localhost"
   port: "3306"
   user: "root"

@@ -19,7 +19,7 @@ public class RewardManager {
         loadRegisteredRewards();
     }
 
-    private void loadRegisteredRewards(){
+    public void loadRegisteredRewards(){
         logger.info("Registering rewards...");
         final ConfigurationSection rewardSection = rewardsYML.getFileConfiguration().getConfigurationSection("Rewards");
         if(rewardSection != null && ! rewardSection.getKeys(false).isEmpty()){

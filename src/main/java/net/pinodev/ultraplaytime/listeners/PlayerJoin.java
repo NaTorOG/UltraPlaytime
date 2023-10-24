@@ -35,6 +35,9 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoined(PlayerJoinEvent event){
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
-        tasksManager.afkTask.usersAfk.put(uuid, new AfkUser(player.getLocation(), 0));
+        if(userManager.getCachedUsers().containsKey(uuid)){
+            tasksManager.afkTask.usersAfk.put(uuid, new AfkUser(player.getLocation(), 0));
+        }
+
     }
 }

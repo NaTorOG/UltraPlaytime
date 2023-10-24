@@ -11,7 +11,7 @@ public enum Settings {
     DB_TYPE(String.class, "Database.type", settingsYML.getFileConfiguration()::getString),
     DB_NAME(String.class, "Database.name", settingsYML.getFileConfiguration()::getString),
     DB_TABLE_USERDATA(String.class, "Database.table_userdata", settingsYML.getFileConfiguration()::getString),
-    DB_TABLE_REWARDS(String.class, "Database.table_rewards", settingsYML.getFileConfiguration()::getString),
+    DB_TABLE_NO_LEADERBOARD(String.class, "Database.table_no_leaderboard", settingsYML.getFileConfiguration()::getString),
     DB_HOST(String.class, "Database.host", settingsYML.getFileConfiguration()::getString),
     DB_PORT(String.class, "Database.port", settingsYML.getFileConfiguration()::getString),
     DB_PASSWORD(String.class, "Database.password", settingsYML.getFileConfiguration()::getString),
