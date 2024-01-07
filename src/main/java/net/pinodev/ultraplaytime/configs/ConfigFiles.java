@@ -36,7 +36,7 @@ public class ConfigFiles implements ManagerFiles {
     public void save(String child, File dataFolder) {
         configFile = new File(dataFolder, child);
         if (!configFile.exists()) {
-            mainInstance.saveResource(child, false);
+            MainInstance.saveResource(child, false);
             logger.info("File " + child + " has been created");
         }
         fileConfiguration = loadConfiguration(configFile);
@@ -46,6 +46,6 @@ public class ConfigFiles implements ManagerFiles {
     @Override
     public void reload(CommandSender sender) {
         fileConfiguration = loadConfiguration(configFile);
-        utilsManager.message.send(Locale.RELOADED_FILE.getString().replace("{file}", configFile.getName()) , sender);
+        UtilsManager.message.send(Locale.RELOADED_FILE.getString().replace("{file}", configFile.getName()) , sender);
     }
 }

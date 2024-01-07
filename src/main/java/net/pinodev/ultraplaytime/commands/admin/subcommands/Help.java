@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
 
 public class Help extends SubCommand {
     public Help(String name, String permission, boolean consoleAllowed) {
@@ -17,9 +17,9 @@ public class Help extends SubCommand {
     @Override
     public void execute(CommandSender executor, String[] args) {
         if(args.length == 1){
-            utilsManager.message.send(Locale.HELP_LIST, executor, null);
+            UtilsManager.message.send(Locale.HELP_LIST, executor, null);
         }else{
-            utilsManager.message.send(Locale.INVALID_COMMAND, executor,null);
+            UtilsManager.message.send(Locale.INVALID_COMMAND, executor,null);
         }
     }
 

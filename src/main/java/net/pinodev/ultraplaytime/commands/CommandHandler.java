@@ -1,13 +1,12 @@
 package net.pinodev.ultraplaytime.commands;
 
 import net.pinodev.ultraplaytime.configs.files.Locale;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
 
 public abstract class CommandHandler {
 
@@ -26,7 +25,7 @@ public abstract class CommandHandler {
             SubCommand subCommand = subCommands.get(strings[0]);
 
             if (!commandSender.hasPermission(subCommand.getPermission())) {
-                utilsManager.message.send(Locale.NO_PERMISSION, commandSender, null);
+                UtilsManager.message.send(Locale.NO_PERMISSION, commandSender, null);
                 return true;
             }
 
@@ -40,7 +39,7 @@ public abstract class CommandHandler {
             return true;
         }
 
-        utilsManager.message.send(Locale.INVALID_COMMAND, commandSender, null);
+        UtilsManager.message.send(Locale.INVALID_COMMAND, commandSender, null);
 
 
         return true;

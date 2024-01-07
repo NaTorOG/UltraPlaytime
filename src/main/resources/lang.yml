@@ -19,11 +19,13 @@ playerMessages:
     - "{prefix}"
     - "&fYour playtime is: &e{playtime}"
     - "&fYour achieved rewards: &e{rewards}"
+    - "&fYour rank &e{rank_name}"
     - ""
   targetPlaytime:
     - "{prefix}"
     - "&f{player} playtime is: &e{playtime}"
     - "&f{player} achieved rewards: &e{rewards}"
+    - "&fYour rank &e{rank_name}"
     - ""
   topPlayers:
     next-page: "&8[&e»&8]"
@@ -48,7 +50,7 @@ playerMessages:
       - "{prev-page}"
   timeToNextReward:
     - "{prefix}"
-    - "&fYou will receive reward: &e{reward}"
+    - "&fYou will receive reward: &e{reward} {rank_name}"
     - "&fin &e{time}"
   noRewardAvailable: "{prefix} &fYou have already achieved the last reward...congratulations!"
   targetNotFound: "{prefix} &fPlayer {player} was not found!"
@@ -61,6 +63,12 @@ adminMessages:
   leaderboard:
     addedIgnoredUser: "{prefix} &f{player} is now ignored from the leaderboard!"
     removedIgnoredUser: "{prefix} &f{player} is no longer ignored from the leaderboard!"
+  migration:
+    pluginNotFound: "{prefix} &fPlugin not found!"
+    started: "{prefix} &fMigration process has started..."
+    failed: "{prefix} &fMigration process has failed... try again!"
+    finished: "{prefix} &fMigration process is completed... please restart the server!"
+    alreadyRunning: "{prefix} &fMigration process is already running..."
   help:
     - "{prefix}"
     - "&e/ptimeadmin reload &7- &fReload lang and rewards files"

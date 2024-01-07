@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.tasksManager;
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.TasksManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
 
 public class Ignore extends SubCommand {
     public Ignore(String name, String permission, boolean consoleAllowed) {
@@ -21,17 +21,18 @@ public class Ignore extends SubCommand {
     @Override
     public void execute(CommandSender executor, String[] args) {
         if(args.length != 2){
-            utilsManager.message.send(Locale.INVALID_COMMAND, executor, null);
+            UtilsManager.message.send(Locale.INVALID_COMMAND, executor, null);
         }else {
             String targetName = args[1];
             final Player target = Bukkit.getPlayer(targetName);
             if (target == null) {
-                utilsManager.message.send(Locale.TARGET_NOT_FOUND.getString().replace("{player}", targetName), executor);
+                UtilsManager.message.send(Locale.TARGET_NOT_FOUND.getString().replace("{player}", targetName), executor);
             }else{
-                tasksManager.leaderboard.
+                TasksManager.leaderboard.
                         handleIgnore(executor, targetName, target.getUniqueId())
                         .exceptionally(throwable -> {
-
+                            throwable.printStackTrace();
+                            UtilsManager.message.send(Locale.GENERAL_ERROR, executor, null);
                             return null;
                         });
             }

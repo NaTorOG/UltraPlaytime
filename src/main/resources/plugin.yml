@@ -4,6 +4,9 @@ main: net.pinodev.ultraplaytime.UltraPlaytime
 api-version: '1.16'
 softdepend:
   - PlaceholderAPI
+  - CMI
+libraries:
+  - 'org.xerial.snappy:snappy-java:1.1.9.1'
 commands:
   playtime:
     description: "Check your playtime"
@@ -11,6 +14,7 @@ commands:
     aliases:
       - ptime
       - ultraplaytime
+      - tempo
   playtimeadmin:
     description: "Administrator commands"
     permission: "ultraplaytime.admin"

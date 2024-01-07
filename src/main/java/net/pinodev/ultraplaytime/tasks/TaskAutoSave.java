@@ -17,21 +17,21 @@ public class TaskAutoSave {
     public boolean isRunning = false;
 
     void autoSaveData(){
-        logger.info("Starting autosaving...found " +userManager.getCachedUsers().size() + " entries!");
+        logger.info("Starting autosaving...found " + UserManager.getCachedUsers().size() + " entries!");
                 isRunning = true;
-                try(Connection conn = database.getConnection();
-                PreparedStatement ps = conn.prepareStatement(SAVE_USER_DATA.getStatement())){
-                    for(User user : userManager.getCachedUsers().values()){
-                        final byte[] uuid = utilsManager.uuid.toBytes(user.getUuid());
+                try(Connection conn = Database.getConnection();
+                    PreparedStatement ps = conn.prepareStatement(SAVE_USER_DATA.getStatement())){
+                    for(User user : UserManager.getCachedUsers().values()){
+                        final byte[] uuid = UtilsManager.uuid.toBytes(user.getUuid());
                         final Long playtime = user.getPlaytime();
                         final byte[] rewards = (user.getRewardsAchieved().size() == 0) ? null
-                                : utilsManager.rewards.compressed(utilsManager.rewards.toArray(user.getRewardsAchieved()));
+                                : UtilsManager.rewards.compressed(UtilsManager.rewards.toArray(user.getRewardsAchieved()));
                         ps.setBytes(1, uuid);
                         ps.setLong(2, playtime);
                         ps.setBytes(3, rewards);
                         ps.addBatch();
                         if(user.isOffline()){
-                            userManager.removeUser(user.getUuid());
+                            UserManager.removeUser(user.getUuid());
                         }
                     }
                     final int[] result = ps.executeBatch();

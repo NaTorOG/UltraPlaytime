@@ -5,7 +5,5 @@
 
 ### Missing
   
-- Commands
-- PAPI Hook
-- Ignoring OPs from leaderboards
-- CMI and Essentials migration
+
+- Essentials migration

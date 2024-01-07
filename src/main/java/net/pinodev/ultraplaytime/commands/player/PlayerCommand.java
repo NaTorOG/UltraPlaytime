@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
 
 public class PlayerCommand extends CommandHandler implements CommandExecutor, TabExecutor {
 
@@ -43,7 +43,7 @@ public class PlayerCommand extends CommandHandler implements CommandExecutor, Ta
                 return true;
             }else{
                 final Player player = (Player) sender;
-                utilsManager.message.sendPlaytime(Locale.PLAYER_PLAYTIME, player, sender);
+                UtilsManager.message.sendPlaytime(Locale.PLAYER_PLAYTIME, player, sender);
             }
 
             return true;

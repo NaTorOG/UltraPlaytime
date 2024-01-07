@@ -19,7 +19,7 @@ public class Reload extends SubCommand {
         if(args.length == 1){
             reloadConfigs(executor);
         }else{
-            utilsManager.message.send(Locale.INVALID_COMMAND, executor,null);
+            UtilsManager.message.send(Locale.INVALID_COMMAND, executor,null);
         }
     }
 
@@ -29,8 +29,8 @@ public class Reload extends SubCommand {
     }
 
     private void reloadConfigs(CommandSender executor){
-        langYML.reload(executor);
-        rewardsYML.reload(executor);
-        rewardManager.loadRegisteredRewards();
+        LangYML.reload(executor);
+        RewardsYML.reload(executor);
+        RewardManager.loadRegisteredRewards();
     }
 }

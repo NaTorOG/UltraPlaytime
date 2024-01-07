@@ -21,11 +21,11 @@ public class TaskRewards {
     public Set<Reward> pending = ConcurrentHashMap.newKeySet();
 
     void check() {
-        if (!rewardManager.getRegisteredRewards().keySet().isEmpty()){
-            for (User user : userManager.getCachedUsers().values()) {
+        if (!RewardManager.getRegisteredRewards().keySet().isEmpty()){
+            for (User user : UserManager.getCachedUsers().values()) {
                 final Long playtime = user.getPlaytime();
-                for (int rewardID : rewardManager.getRegisteredRewards().keySet()) {
-                    final int secondsRequirement = rewardManager.getRegisteredRewards().get(rewardID);
+                for (int rewardID : RewardManager.getRegisteredRewards().keySet()) {
+                    final int secondsRequirement = RewardManager.getRegisteredRewards().get(rewardID);
                     long millisRequirement = (long) secondsRequirement * 1000;
                     if (!user.getRewardsAchieved().contains(rewardID) && playtime >= millisRequirement && !user.isOffline()) {
                         pending.add(new Reward(
@@ -58,12 +58,12 @@ public class TaskRewards {
                 }
                 logger.info("Took Reward " + (System.currentTimeMillis() - time) + "ms");
             }
-        }.runTaskTimer(mainInstance, 0L, 40L);
+        }.runTaskTimer(MainInstance, 0L, 40L);
     }
 
     private void giveReward(Player player, Reward reward){
         if(player != null && player.isOnline()){
-            final Sound rewardSound = Sound.valueOf(reward.getSound());
+            final String rewardSound = reward.getSound();
             final List<String> commands = reward.getCommands().stream()
                     .map(string -> string.replace("{player}", player.getName()))
                     .filter(string -> string.contains(player.getName()))
@@ -76,9 +76,12 @@ public class TaskRewards {
                     .collect(Collectors.toList());
             final String upperTitle = reward.getUpperTitle().replace("{player}", player.getName());
             final String subTitle = reward.getSubTitle().replace("{player}", player.getName());
-            player.playSound(player.getLocation(), rewardSound, 1f, 1f);
-            utilsManager.message.send(messages, player);
-            utilsManager.message.sendTitle(upperTitle, subTitle, player);
+            if(rewardSound != null){
+                player.playSound(player.getLocation(), Sound.valueOf(rewardSound), 1f, 1f);
+            }
+
+            UtilsManager.message.send(messages, player);
+            UtilsManager.message.sendTitle(upperTitle, subTitle, player);
             for(String command : commands){
                 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
             }

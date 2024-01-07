@@ -30,7 +30,7 @@ import static net.pinodev.ultraplaytime.utils.LogUtils.*;
 
 public final class UltraPlaytime extends JavaPlugin{
 
-    public static UltraPlaytime mainInstance;
+    public static UltraPlaytime MainInstance;
 
     public static final Logger logger = Logger.getLogger("UltraPlayTime");
 
@@ -40,40 +40,40 @@ public final class UltraPlaytime extends JavaPlugin{
     /*
     File configuration instances
      */
-    public static ConfigFiles settingsYML;
+    public static ConfigFiles SettingsYML;
 
-    public static ConfigFiles langYML;
+    public static ConfigFiles LangYML;
 
-    public static ConfigFiles rewardsYML;
+    public static ConfigFiles RewardsYML;
 
     /*
     Database
      */
 
-    public static DatabaseManager database;
+    public static DatabaseManager Database;
 
     /*
     Tasks
      */
 
-    public static TasksManager tasksManager;
+    public static TasksManager TasksManager;
 
     /*
     Cache
      */
-    public static UserManager userManager;
+    public static UserManager UserManager;
 
     /*
     Reward Manager
      */
 
-    public static RewardManager rewardManager;
+    public static RewardManager RewardManager;
 
     /*
     Utils
      */
 
-    public static UtilsManager utilsManager = new UtilsManager();
+    public static UtilsManager UtilsManager;
 
     @Override
     public void onEnable() {
@@ -89,28 +89,28 @@ public final class UltraPlaytime extends JavaPlugin{
 
     @Override
     public void onDisable() {
-        tasksManager.shutdownScheduler();
-        database.closeHikariPool();
+        TasksManager.shutdownScheduler();
+        Database.closeHikariPool();
     }
 
     private void setInstances(){
-        mainInstance = this;
+        MainInstance = this;
         setConfigs();
         new LibManager();
-        utilsManager = new UtilsManager();
-        userManager = new UserManager();
+        UtilsManager = new UtilsManager();
+        UserManager = new UserManager();
         loadDatabase();
         if(!Settings.MULTI_SERVER_REWARDS.getBoolean()){
-            rewardManager = new RewardManager();
+            RewardManager = new RewardManager();
         }
-        tasksManager = new TasksManager();
+        TasksManager = new TasksManager();
 
     }
 
     private void setConfigs(){
-        settingsYML = new ConfigFiles("settings.yml", getDataFolder());
-        langYML = new ConfigFiles("lang.yml", getDataFolder());
-        rewardsYML = new ConfigFiles("rewards.yml", getDataFolder());
+        SettingsYML = new ConfigFiles("settings.yml", getDataFolder());
+        LangYML = new ConfigFiles("lang.yml", getDataFolder());
+        RewardsYML = new ConfigFiles("rewards.yml", getDataFolder());
     }
 
     private void setListeners(){
@@ -142,18 +142,18 @@ public final class UltraPlaytime extends JavaPlugin{
     private void loadDatabase(){
         switch (DB_TYPE.getString().toLowerCase()) {
             case "h2":
-                database = new H2();
+                Database = new H2();
                 break;
             case "mysql":
-                database = new MySQL();
+                Database = new MySQL();
                 break;
             case "mariadb":
-                database = new MariaDB();
+                Database = new MariaDB();
                 break;
             default:
                 logger.info("!!! Invalid database type specified -> " + DB_TYPE.getString());
                 logger.info("!!! Switching to default H2");
-                database = new H2();
+                Database = new H2();
                 break;
 
         }

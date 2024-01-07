@@ -4,10 +4,9 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
-import java.util.function.Function;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.langYML;
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.LangYML;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
 
 
 public enum Locale {
@@ -32,7 +31,13 @@ public enum Locale {
     NO_MORE_REWARDS(String.class,"playerMessages.noRewardAvailable"),
     GENERAL_ERROR(String.class,"adminMessages.error"),
     RELOADED_FILE(String.class,"adminMessages.fileReloaded"),
+
     INVALID_COMMAND(String.class,"playerMessages.invalidCommand"),
+    MIGRATION_STARTED(String.class, "adminMessages.migration.started"),
+    MIGRATION_FAILED(String.class, "adminMessages.migration.failed"),
+    MIGRATION_COMPLETED(String.class, "adminMessages.migration.finished"),
+    MIGRATION_RUNNING(String.class, "adminMessages.migration.alreadyRunning"),
+    MIGRATION_NOT_FOUND(String.class, "adminMessages.migration.pluginNotFound"),
     HELP_LIST(List.class, "adminMessages.help"),
     SET_TIME(String.class,"adminMessages.setTime"),
     SET_REWARD(String.class,"adminMessages.setReward"),
@@ -54,25 +59,25 @@ public enum Locale {
     }
 
     public String getString() {
-        return langYML.getFileConfiguration().getString(key);
+        return LangYML.getFileConfiguration().getString(key);
     }
 
     public List<String> getStringList(){
-        return langYML.getFileConfiguration().getStringList(key);
+        return LangYML.getFileConfiguration().getStringList(key);
     }
 
     public String getStripped(){
-        String text =  langYML.getFileConfiguration().getString(key);
+        String text =  LangYML.getFileConfiguration().getString(key);
         text = text.replaceAll("&", "§");
         return ChatColor.stripColor(text);
     }
 
     public String getColorized(){
-        final String message = langYML.getFileConfiguration().getString(key);
-        return utilsManager.message.colorized(message);
+        final String message = LangYML.getFileConfiguration().getString(key);
+        return UtilsManager.message.colorized(message);
     }
 
     public ConfigurationSection getConfigurationSection(){
-        return langYML.getFileConfiguration().getConfigurationSection(key);
+        return LangYML.getFileConfiguration().getConfigurationSection(key);
     }
 }

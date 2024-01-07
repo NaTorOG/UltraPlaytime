@@ -18,16 +18,19 @@ public class PlayerQuit implements Listener {
     public void onQuit(PlayerQuitEvent event){
         final UUID uuid = event.getPlayer().getUniqueId();
         final String username = event.getPlayer().getName();
-        final User user = userManager.getCachedUsers().get(uuid);
-        tasksManager.afkTask.usersAfk.remove(uuid);
-        if(MULTI_SERVER.getBoolean()){
-            tasksManager.quit.saveUser(user).exceptionally(throwable -> {
-                logger.info(ANSI_RED.getColor() + "ERROR: " + ANSI_RESET.getColor() + " Impossible to save data for " + username);
-                throwable.printStackTrace();
-                return null;
-            });
-        }else{
-            user.setOffline(true);
+        final User user = UserManager.getCachedUsers().get(uuid);
+        TasksManager.afkTask.usersAfk.remove(uuid);
+        if(user != null){
+            if(MULTI_SERVER.getBoolean()){
+                TasksManager.quit.saveUser(user).exceptionally(throwable -> {
+                    logger.info(ANSI_RED.getColor() + "ERROR: " + ANSI_RESET.getColor() + " Impossible to save data for " + username);
+                    throwable.printStackTrace();
+                    return null;
+                });
+            }else{
+                user.setOffline(true);
+            }
         }
+
     }
 }

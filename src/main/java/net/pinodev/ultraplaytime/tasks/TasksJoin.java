@@ -49,10 +49,10 @@ public class TasksJoin {
 
     private CompletableFuture<Void> getUserData(UUID uuid){
         return CompletableFuture.runAsync(() -> {
-            try (Connection conn = database.getConnection();
+            try (Connection conn = Database.getConnection();
                  PreparedStatement ps = conn.prepareCall(GET_USER_DATA.getStatement())
             ) {
-                ps.setBytes(1, utilsManager.uuid.toBytes(uuid));
+                ps.setBytes(1, UtilsManager.uuid.toBytes(uuid));
                 try (ResultSet rs = ps.executeQuery()) {
                     final long playtime;
                     final int[] rewardsArray;
@@ -60,7 +60,7 @@ public class TasksJoin {
                     if (rs.next()) {
                         playtime = rs.getLong("playtime");
                         rewardsArray = (rs.getBytes("rewards") != null)
-                                ? utilsManager.rewards.decompressed(rs.getBytes("rewards"))
+                                ? UtilsManager.rewards.decompressed(rs.getBytes("rewards"))
                                 : new int[]{};
                         isNewbie = false;
                     } else {
@@ -68,10 +68,10 @@ public class TasksJoin {
                         rewardsArray = new int[]{};
                         isNewbie = true;
                     }
-                    userManager.addUser(uuid, new User(
+                    UserManager.addUser(uuid, new User(
                             uuid,
                             playtime,
-                            utilsManager.rewards.toHashSet(rewardsArray),
+                            UtilsManager.rewards.toHashSet(rewardsArray),
                             isNewbie,
                             false,
                             false

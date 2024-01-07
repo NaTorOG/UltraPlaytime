@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 import static net.pinodev.ultraplaytime.UltraPlaytime.logger;
-import static net.pinodev.ultraplaytime.UltraPlaytime.settingsYML;
+import static net.pinodev.ultraplaytime.UltraPlaytime.SettingsYML;
 import static net.pinodev.ultraplaytime.database.queries.Statements.CREATE_TABLE_NO_LEADERBOARD;
 import static net.pinodev.ultraplaytime.database.queries.Statements.CREATE_TABLE_USERS;
 
@@ -31,7 +31,7 @@ public interface DatabaseManager {
     Set the connection Pool extra properties defined in config
      */
     default void setHikariProperties(HikariDataSource dataSource){
-        final ConfigurationSection properties = settingsYML.getFileConfiguration().getConfigurationSection("Database.properties");
+        final ConfigurationSection properties = SettingsYML.getFileConfiguration().getConfigurationSection("Database.properties");
         if(properties != null){
             for(String key : properties.getKeys(false)){
                 dataSource.addDataSourceProperty(key, properties.getString(key));

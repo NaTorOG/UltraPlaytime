@@ -23,22 +23,22 @@ import static net.pinodev.ultraplaytime.utils.LogUtils.ANSI_RESET;
 public class TasksLeaderboard {
 
     void getLeaderboard(){
-            userManager.getTopUsers().clear();
-            try(Connection conn = database.getConnection();
+            UserManager.getTopUsers().clear();
+            try(Connection conn = Database.getConnection();
                 PreparedStatement ps = conn.prepareStatement(GET_TOP_USERS.getStatement());
                 ResultSet rs = ps.executeQuery()){
                 while (rs.next()){
-                    final UUID uuid = utilsManager.uuid.fromBytes(rs.getBytes("player_uuid"));
+                    final UUID uuid = UtilsManager.uuid.fromBytes(rs.getBytes("player_uuid"));
                     String username = Bukkit.getOfflinePlayer(uuid).getName();
                     if(username == null) username = "UNKNOWN";
                     final Long playtime = rs.getLong("playtime");
-                    userManager.addTopUser(new TopUser(
+                    UserManager.addTopUser(new TopUser(
                             uuid,
                             playtime,
                             username
                     ));
                 }
-                logger.info("Fetched "+userManager.getTopUsers().size() + "/10 Top Users from database!");
+                logger.info("Fetched "+ UserManager.getTopUsers().size() + "/10 Top Users from database!");
             }catch (SQLException exception){
                 logger.info(ANSI_RED.getColor() + "ERROR: "+ANSI_RESET.getColor() + " while fetching leaderboard... retrying in a while!");
                 exception.printStackTrace();
@@ -61,9 +61,9 @@ public class TasksLeaderboard {
 
     private CompletableFuture<Boolean> checkIfIgnored(UUID uuid){
         return CompletableFuture.supplyAsync(() ->{
-            try(Connection conn = database.getConnection();
+            try(Connection conn = Database.getConnection();
                 PreparedStatement ps = conn.prepareStatement(GET_NO_LEADERBOARD_USER.getStatement())){
-                ps.setBytes(1, utilsManager.uuid.toBytes(uuid));
+                ps.setBytes(1, UtilsManager.uuid.toBytes(uuid));
                 try(ResultSet rs = ps.executeQuery()){
                     return rs.next();
                 }
@@ -76,14 +76,14 @@ public class TasksLeaderboard {
     }
     private void addIgnored(CommandSender sender, UUID uuid, List<Placeholder> placeholders){
         CompletableFuture.runAsync(() -> {
-            try (Connection conn = database.getConnection();
+            try (Connection conn = Database.getConnection();
                  PreparedStatement ps = conn.prepareStatement(ADD_NO_LEADERBOARD_USER.getStatement())) {
-                ps.setBytes(1, utilsManager.uuid.toBytes(uuid));
+                ps.setBytes(1, UtilsManager.uuid.toBytes(uuid));
                 ps.executeUpdate();
-                utilsManager.message.send(Locale.ADDED_LEADERBOARD_IGNORED, sender, placeholders);
+                UtilsManager.message.send(Locale.ADDED_LEADERBOARD_IGNORED, sender, placeholders);
                 logger.info("Added " + uuid.toString() + " to leaderboard ignored players");
             } catch (SQLException exception) {
-                utilsManager.message.send(Locale.GENERAL_ERROR, sender, placeholders);
+                UtilsManager.message.send(Locale.GENERAL_ERROR, sender, placeholders);
                 logger.info(ANSI_RED.getColor() + "ERROR: " + ANSI_RESET.getColor() + " while adding a player to ignored players from leaderboard!");
                 exception.printStackTrace();
             }
@@ -92,14 +92,14 @@ public class TasksLeaderboard {
 
     private void removeIgnored(CommandSender sender, UUID uuid, List<Placeholder> placeholders){
         CompletableFuture.runAsync(() ->{
-            try(Connection conn = database.getConnection();
+            try(Connection conn = Database.getConnection();
                 PreparedStatement ps = conn.prepareStatement(REMOVE_NO_LEADERBOARD_USER.getStatement())){
-                ps.setBytes(1, utilsManager.uuid.toBytes(uuid));
+                ps.setBytes(1, UtilsManager.uuid.toBytes(uuid));
                 ps.executeUpdate();
-                utilsManager.message.send(Locale.REMOVED_LEADERBOARD_IGNORED, sender, placeholders);
+                UtilsManager.message.send(Locale.REMOVED_LEADERBOARD_IGNORED, sender, placeholders);
                 logger.info("Removed " + uuid.toString() + " from leaderboard ignored players");
             }catch (SQLException exception){
-                utilsManager.message.send(Locale.GENERAL_ERROR, sender, placeholders);
+                UtilsManager.message.send(Locale.GENERAL_ERROR, sender, placeholders);
                 logger.info(ANSI_RED.getColor() + "ERROR: " + ANSI_RESET.getColor() + " while removing a player to ignored players from leaderboard!");
                 exception.printStackTrace();
             }

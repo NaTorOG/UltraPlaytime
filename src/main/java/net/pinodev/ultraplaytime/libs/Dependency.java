@@ -22,13 +22,14 @@ public enum Dependency {
             "HikariCP",
             "4.0.3",
             "fAJK7/HBBjV210RTUT+d5kR9jmJNF/jifzCi6XaIxsk="
-    ),
-    SNAPPY_JAVA("org.xerial.snappy",
-            "snappy-java",
-            "1.1.10.4",
-              "VbMMlOXEzC1LaXaRYJjQZ4qKbMdCf6jIdWIb2U5zGsg=");
+    );
+//   SNAPPY_JAVA("org{}xerial{}snappy",
+//        "snappy-java",
+//        "1.1.9.1",
+//        "tpa8kQXR6GnePlsrsWW9Ckgr8IQVkX4l0px0YeWxSW4=");
 
     public final String dependencyMavenRepository;
+
 
     public final String dependencyArtifactID;
     public final String dependencyVersion;

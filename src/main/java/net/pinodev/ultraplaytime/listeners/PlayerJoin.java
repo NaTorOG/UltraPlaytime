@@ -20,8 +20,8 @@ public class PlayerJoin implements Listener {
         if (event.getLoginResult() == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
             final UUID uuid = event.getUniqueId();
             final String username = event.getName();
-            if (!userManager.getCachedUsers().containsKey(uuid)) {
-                tasksManager.join.loadUser(uuid)
+            if (!UserManager.getCachedUsers().containsKey(uuid)) {
+                TasksManager.join.loadUser(uuid)
                 .exceptionally(throwable -> {
                     logger.info(ANSI_RED.getColor() + "ERROR: "+ ANSI_RESET.getColor()+" Impossible to get data for "+username);
                     throwable.printStackTrace();
@@ -35,9 +35,7 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoined(PlayerJoinEvent event){
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
-        if(userManager.getCachedUsers().containsKey(uuid)){
-            tasksManager.afkTask.usersAfk.put(uuid, new AfkUser(player.getLocation(), 0));
-        }
+            TasksManager.afkTask.usersAfk.put(uuid, new AfkUser(player.getLocation(), 0));
 
     }
 }

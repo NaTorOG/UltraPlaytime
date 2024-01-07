@@ -9,14 +9,14 @@ import net.pinodev.ultraplaytime.configs.files.Locale;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.userManager;
-import static net.pinodev.ultraplaytime.UltraPlaytime.utilsManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UserManager;
+import static net.pinodev.ultraplaytime.UltraPlaytime.UtilsManager;
+import static net.pinodev.ultraplaytime.configs.files.Rewards.REWARD_DISPLAYNAME;
 
 public class MessageUtils {
     public String colorized(String message) {
@@ -40,11 +40,13 @@ public class MessageUtils {
 
 
     public void sendPlaytime(Locale locale, Player target, CommandSender sender){
-        final User user = userManager.getCachedUsers().get(target.getUniqueId());
+        final User user = UserManager.getCachedUsers().get(target.getUniqueId());
         final Long playtime = user.getPlaytime();
+        final String currentReward = UtilsManager.rewards.getCurrentReward(target);
         List<Placeholder> placeholders = new ArrayList<>();
-        placeholders.add(new Placeholder("{playtime}", utilsManager.playtime.formatted(playtime)));
-        placeholders.add(new Placeholder("{rewards}", utilsManager.rewards.getCurrentReward(target)));
+        placeholders.add(new Placeholder("{playtime}", UtilsManager.playtime.formatted(playtime)));
+        placeholders.add(new Placeholder("{rewards}", currentReward));
+        placeholders.add(new Placeholder("{rank_name}", REWARD_DISPLAYNAME.getString(Integer.parseInt(currentReward))));
         if(locale == Locale.TARGET_PLAYTIME){
             placeholders.add(new Placeholder("{player}", target.getName()));
         }
@@ -123,6 +125,6 @@ public class MessageUtils {
         for(Placeholder placeholder : placeholders){
             text = text.replace(placeholder.getToSubstitute(), placeholder.getSubstitutor());
         }
-        return text;
+        return colorized(text);
     }
 }

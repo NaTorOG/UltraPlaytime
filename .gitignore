@@ -3,6 +3,7 @@
 *.xml
 *.iml
 /target
+/libs
 # Log file
 *.log
 

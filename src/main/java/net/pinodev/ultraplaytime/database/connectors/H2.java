@@ -3,7 +3,7 @@ package net.pinodev.ultraplaytime.database.connectors;
 import com.zaxxer.hikari.HikariDataSource;
 import net.pinodev.ultraplaytime.database.DatabaseManager;
 
-import static net.pinodev.ultraplaytime.UltraPlaytime.mainInstance;
+import static net.pinodev.ultraplaytime.UltraPlaytime.MainInstance;
 import static net.pinodev.ultraplaytime.configs.files.Settings.*;
 import static net.pinodev.ultraplaytime.configs.files.Settings.DB_MAX_POOL_SIZE;
 
@@ -25,7 +25,7 @@ public class H2 implements DatabaseManager {
         dataSource = new HikariDataSource();
         dataSource.setPoolName("UltraPlaytime-Pool");
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setJdbcUrl("jdbc:h2:" + mainInstance.getDataFolder().getAbsolutePath() + "/data/h2-playtime;mode=mysql");
+        dataSource.setJdbcUrl("jdbc:h2:" + MainInstance.getDataFolder().getAbsolutePath() + "/data/h2-playtime;mode=mysql");
         dataSource.setConnectionTimeout(DB_CONNECTION_TIMEOUT.getLong());
         dataSource.setIdleTimeout(DB_IDLE_TIMEOUT.getLong());
         dataSource.setMaxLifetime(DB_MAX_LIFETIME.getLong());
