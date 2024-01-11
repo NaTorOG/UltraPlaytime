@@ -87,6 +87,7 @@ public class TaskRewards {
             }
             pending.remove(reward);
         }
+        //TEST
     }
 
     public TaskRewards(){
